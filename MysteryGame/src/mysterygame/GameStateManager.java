@@ -64,16 +64,18 @@ public class GameStateManager
             "The Mystery Villager's Office",
             "A dimly lit study filled with shipping manifests, ledgers, and the scent of old parchment. " +
             "Moonlight filters through heavy curtains, casting shadows across documents that may hold dark secrets. " +
-            "The massive oak desk dominates the room, its drawers secured with intricate locks.",
+            "The massive oak desk dominates the room, its drawers secured with intricate locks that seem to guard " +
+            "more than mere paperwork.",
             "Manor"
         );
         
         manorNodes[1] = new InvestigationNode(
             "MANOR_BEDROOM", 
             "The Barricaded Bedroom",
-            "Behind the barricaded door lies a chamber frozen in grief. Torn children's toys scatter the floor " +
-            "like memories of innocence lost. A locket gleams on the nightstand beside a leather-bound diary, " +
-            "its pages filled with desperate words. The air feels heavy with sorrow and terrible secrets.",
+            "Behind the barricaded door lies a chamber frozen in grief and supernatural dread. Torn children's toys " +
+            "scatter the floor like memories of innocence lost, while strange shadows seem to move independently " +
+            "of their sources. A locket gleams on the nightstand beside a leather-bound diary, its pages filled " +
+            "with desperate words that seem to whisper when the wind stirs them.",
             "Manor"
         );
         
@@ -81,8 +83,9 @@ public class GameStateManager
             "MANOR_LIBRARY", 
             "The Manor's Private Library",
             "Towering bookshelves reach toward vaulted ceilings, filled with rare tomes and forbidden knowledge. " +
-            "A peculiar shimmer catches your eye from across the room - a crystalline object that seems to pulse " +
-            "with otherworldly energy. The scent of ancient magic permeates this scholarly sanctuary.",
+            "A peculiar crystalline object pulses with otherworldly energy from across the room, its light casting " +
+            "dancing shadows that form almost recognizable shapes. The scent of ancient magic and something darker " +
+            "permeates this scholarly sanctuary.",
             "Manor"
         );
         
@@ -90,27 +93,30 @@ public class GameStateManager
         forestNodes[0] = new InvestigationNode(
             "FOREST_HUT", 
             "The Abandoned Hut",
-            "This crumbling shelter bears the scars of supernatural encounters. Three-toed prints circle the structure " +
-            "in disturbing patterns, while scorched earth tells of flames that burned with unnatural heat. " +
-            "Fragments of a journal flutter in the wind, their torn pages whispering of ancient debts.",
+            "This crumbling shelter bears the scars of supernatural encounters that defy natural explanation. " +
+            "Three-toed prints circle the structure in disturbing spiral patterns, while scorched earth tells " +
+            "of flames that burned with unnatural cold rather than heat. Fragments of a journal flutter in " +
+            "the wind, their torn pages whispering of ancient debts and impossible bargains.",
             "Forest"
         );
         
         forestNodes[1] = new InvestigationNode(
             "FOREST_CAVE", 
             "The Hidden Cave",
-            "Deep within the forest's heart lies this underground chamber, carved by hands unknown. " +
-            "An altar of black stone dominates the space, surrounded by fractured binding crystals that " +
-            "still hum with residual power. Children's toys arranged in ritualistic patterns speak of dark ceremonies.",
+            "Deep within the forest's heart lies this underground chamber, carved by hands unknown centuries ago. " +
+            "An altar of black stone dominates the space, surrounded by fractured binding crystals that still " +
+            "hum with residual power. Children's toys are arranged in ritualistic patterns that hurt to look at " +
+            "directly, speaking of dark ceremonies and stolen innocence.",
             "Forest"
         );
         
         forestNodes[2] = new InvestigationNode(
             "FOREST_STONE_CIRCLE", 
             "The Ancient Stone Circle",
-            "Weathered monoliths stand sentinel in this sacred grove, their surfaces etched with symbols older than memory. " +
-            "Here dwells Derren, the hermit guardian who keeps watch over ancient covenants. " +
-            "The very air thrums with ancestral power and forgotten wisdom.",
+            "Weathered monoliths stand sentinel in this sacred grove, their surfaces etched with symbols older than " +
+            "memory itself. Here dwells Derren, the hermit guardian who keeps watch over ancient covenants and " +
+            "broken promises. The very air thrums with ancestral power, and whispers of long-dead heroes echo " +
+            "between the standing stones.",
             "Forest"
         );
         
@@ -118,18 +124,20 @@ public class GameStateManager
         socialNodes[0] = new InvestigationNode(
             "VILLAGE_CHIEF", 
             "Village Chief's Hall",
-            "The heart of village governance, where decisions that affect all are made. " +
-            "Chief Aldric, a man weathered by years of leadership, knows the old stories and darker truths " +
-            "that most prefer to forget. His hall holds records of ancient pacts and modern crimes.",
+            "The heart of village governance, where decisions that affect all are made in the shadow of growing dread. " +
+            "Chief Aldric, a man weathered by years of leadership and recent supernatural terror, knows the old stories " +
+            "and darker truths that most prefer to forget. His hall holds records of ancient pacts, modern crimes, " +
+            "and the increasingly desperate measures taken to protect what remains of the village's children.",
             "Social"
         );
         
         socialNodes[1] = new InvestigationNode(
             "MARA_COTTAGE", 
             "Mara's Cottage",
-            "The wise woman's dwelling sits at the village edge, where conventional meets mystical. " +
-            "Mara possesses knowledge of protective charms and ancient rituals, her trust earned through " +
-            "careful conversation and demonstrated wisdom. Her cottage overflows with herbs and hidden lore.",
+            "The wise woman's dwelling sits at the village edge, where conventional wisdom meets mystical knowledge. " +
+            "Mara possesses understanding of protective charms and ancient rituals, her trust earned through careful " +
+            "conversation and demonstrated wisdom. Her cottage overflows with herbs, amulets, and hidden lore that " +
+            "may hold the key to combating supernatural threats.",
             "Social"
         );
     }
@@ -150,6 +158,14 @@ public class GameStateManager
         {
             setFlag(FLAG_CHOSE_MANOR, true);
             this.currentPath = "Manor Investigation";
+        }
+        else if (pathChoice.equalsIgnoreCase("SOCIAL"))
+        {
+            this.currentPath = "Social Investigation";
+        }
+        else
+        {
+            this.currentPath = "General Investigation";
         }
     }
     
@@ -216,47 +232,47 @@ public class GameStateManager
                 if (action.equals("Hide Under Bed")) 
                 {
                     setFlag(FLAG_HID_UNDER_BED, true);
-                    investigationScores[0] += 2;
+                    investigationScores[0] += 3;
                 }
                 else if (action.equals("Hide in Closet")) 
                 {
                     setFlag(FLAG_HID_IN_CLOSET, true);
-                    investigationScores[0] += 2;
+                    investigationScores[0] += 3;
                 }
                 else if (action.contains("Window")) 
                 {
                     setFlag(FLAG_JUMPED_WINDOW, true);
-                    investigationScores[0] += 1;
+                    investigationScores[0] += 2;
                 }
                 if (action.contains("Diary")) 
                 {
                     setFlag(FLAG_DIARY_FOUND, true);
-                    investigationScores[0] += 3;
+                    investigationScores[0] += 4;
                 }
                 if (action.contains("Locket")) 
                 {
                     setFlag(FLAG_LOCKET_FOUND, true);
                     setFlag(FLAG_ANCHOR_TOKEN_FOUND, true);
-                    investigationScores[0] += 2;
+                    investigationScores[0] += 4;
                 }
             }
             else if (nodeName.contains("Library")) 
             {
-                if (action.contains("Shiny Object")) 
+                if (action.contains("Crystalline") || action.contains("Object")) 
                 {
                     setFlag(FLAG_LIBRARY_TRIGGERED, true);
-                    investigationScores[0] += 2;
+                    investigationScores[0] += 3;
                 }
                 if (action.contains("Secret Room")) 
                 {
                     setFlag(FLAG_SECRET_ROOM_TRAPPED, true);
                     investigationScores[0] += 3;
                 }
-                if (action.contains("Beast")) 
+                if (action.contains("Beast") || action.contains("Observe")) 
                 {
                     setFlag(FLAG_BEAST_OBSERVED, true);
                     setFlag(FLAG_TRUE_NAME_KNOWN, true);
-                    investigationScores[0] += 4;
+                    investigationScores[0] += 5;
                 }
             }
             
@@ -267,7 +283,11 @@ public class GameStateManager
                 {
                     setFlag(FLAG_TRACKS_FOLLOWED, true);
                     setFlag(FLAG_HUT_EXAMINED, true);
-                    investigationScores[1] += 2; // Forest score
+                    investigationScores[1] += 3; // Forest score
+                }
+                if (action.contains("Scorched") || action.contains("Journal")) 
+                {
+                    investigationScores[1] += 2;
                 }
             }
             else if (nodeName.contains("Cave")) 
@@ -276,7 +296,11 @@ public class GameStateManager
                 {
                     setFlag(FLAG_CAVE_EXAMINED, true);
                     setFlag(FLAG_ANCHOR_TOKEN_FOUND, true);
-                    investigationScores[1] += 3;
+                    investigationScores[1] += 4;
+                }
+                if (action.contains("Crystal") || action.contains("Toys")) 
+                {
+                    investigationScores[1] += 2;
                 }
             }
             else if (nodeName.contains("Stone Circle")) 
@@ -284,12 +308,17 @@ public class GameStateManager
                 if (action.contains("Horn")) 
                 {
                     setFlag(FLAG_HORN_OBTAINED, true);
-                    investigationScores[1] += 3;
+                    investigationScores[1] += 4;
                 }
                 if (action.contains("Derren")) 
                 {
                     setFlag(FLAG_STONE_CIRCLE_FOUND, true);
-                    investigationScores[1] += 2;
+                    investigationScores[1] += 3;
+                }
+                if (action.contains("Ritual") || action.contains("Symbols")) 
+                {
+                    setFlag(FLAG_RITUAL_FRAGMENTS_OBTAINED, true);
+                    investigationScores[1] += 3;
                 }
             }
             
@@ -297,7 +326,20 @@ public class GameStateManager
             if (nodeName.contains("Chief")) 
             {
                 setFlag(FLAG_CHIEF_INFORMED, true);
-                investigationScores[2] += 2; // Social score
+                investigationScores[2] += 3; // Social score
+                if (action.contains("Evidence")) 
+                {
+                    investigationScores[2] += 2;
+                }
+            }
+            else if (nodeName.contains("Mara")) 
+            {
+                investigationScores[2] += 2;
+                if (action.contains("Ritual")) 
+                {
+                    setFlag(FLAG_RITUAL_FRAGMENTS_OBTAINED, true);
+                    investigationScores[2] += 3;
+                }
             }
         }
         
@@ -334,4 +376,34 @@ public class GameStateManager
     public String getCurrentPath() { return currentPath; }
     public boolean isGameCompleted() { return gameCompleted; }
     public BaseCharacter getCurrentCharacter() { return currentCharacter; }
+    
+    // Additional methods for game state information
+    public int getManorScore() { return investigationScores[0]; }
+    public int getForestScore() { return investigationScores[1]; }
+    public int getSocialScore() { return investigationScores[2]; }
+    public int getTotalInvestigationScore() { return investigationScores[3]; }
+    
+    public String getSummary() 
+    {
+        StringBuilder summary = new StringBuilder();
+        summary.append("Investigation Progress:\n");
+        summary.append("Manor Score: ").append(investigationScores[0]).append("\n");
+        summary.append("Forest Score: ").append(investigationScores[1]).append("\n");
+        summary.append("Social Score: ").append(investigationScores[2]).append("\n");
+        summary.append("Total Investigation Score: ").append(investigationScores[3]).append("\n");
+        summary.append("Character Knowledge: ").append(currentCharacter.getKnowledgePoints()).append("\n");
+        summary.append("Combined Knowledge Score: ").append(getTotalKnowledgeScore()).append("\n");
+        
+        // Key flags status
+        summary.append("\nKey Discoveries:\n");
+        if (getFlag(FLAG_DIARY_FOUND)) summary.append("• Found child's diary\n");
+        if (getFlag(FLAG_ANCHOR_TOKEN_FOUND)) summary.append("• Discovered anchor token\n");
+        if (getFlag(FLAG_BEAST_OBSERVED)) summary.append("• Observed the creature\n");
+        if (getFlag(FLAG_TRUE_NAME_KNOWN)) summary.append("• Learned creature's true name\n");
+        if (getFlag(FLAG_HORN_OBTAINED)) summary.append("• Obtained ancient horn\n");
+        if (getFlag(FLAG_CHIEF_INFORMED)) summary.append("• Informed village chief\n");
+        if (getFlag(FLAG_RITUAL_FRAGMENTS_OBTAINED)) summary.append("• Gathered ritual fragments\n");
+        
+        return summary.toString();
+    }
 }

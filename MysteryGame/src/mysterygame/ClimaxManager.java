@@ -4,7 +4,7 @@
  */
 package mysterygame;
 
-// ClimaxManager.java - Complete ending resolution system
+// ClimaxManager.java - Complete ending resolution system with enhanced narrative
 public class ClimaxManager 
 {
     private GameStateManager gameState;
@@ -14,7 +14,7 @@ public class ClimaxManager
     private int ritualFailureMeter;
     private boolean memoryPaid;
     
-    // Enhanced ending constants matching the Mystery Game PDF
+    // Enhanced ending constants matching the Mystery Game concept
     private static final String STELLAR_RITUAL_APOTHEOSIS = "STELLAR_RITUAL_APOTHEOSIS";
     private static final String STELLAR_COMBAT_TRIUMPH = "STELLAR_COMBAT_TRIUMPH";
     private static final String STELLAR_POLITICAL_REFORM = "STELLAR_POLITICAL_REFORM";
@@ -47,56 +47,56 @@ public class ClimaxManager
     {
         // Stellar Win Endings (Tier 1 - Best Outcomes)
         possibleEndings[0] = STELLAR_RITUAL_APOTHEOSIS;
-        endingDescriptions[0] = "The Master's Binding - You taste absence where a warm July afternoon used to sit. The weave holds perfectly.";
+        endingDescriptions[0] = "The Master's Binding - You taste absence where warm memories used to sit. The weave holds perfectly.";
         
         possibleEndings[1] = STELLAR_COMBAT_TRIUMPH;
-        endingDescriptions[1] = "The Beast Slayer - When the creature fell the earth sighed. You are lauded and quietly feared.";
+        endingDescriptions[1] = "The Beast Slayer - When the creature fell, the earth sighed. You are lauded and quietly feared.";
         
         possibleEndings[2] = STELLAR_POLITICAL_REFORM;
-        endingDescriptions[2] = "The Architect - The compact stood in the square, read by everyone. You are hero and architect of a new order.";
+        endingDescriptions[2] = "The Architect - The compact stands in the square, read by all. You are hero and architect of justice.";
 
         // Clean Win Endings (Tier 2)
         possibleEndings[3] = CLEAN_RITUAL_WIN;
-        endingDescriptions[3] = "Memory's Price - Kiri laughs again. You cannot remember your mother's kitchen, and that loss lives like a quiet wound.";
+        endingDescriptions[3] = "Memory's Price - Children laugh again. You cannot remember your first pet's name, and that loss aches.";
         
         possibleEndings[4] = TACTICAL_DESTROY_WIN;
-        endingDescriptions[4] = "The Wounded Victory - The beast tore and bled. Hollowfen sleeps tonight, uneasy but alive.";
+        endingDescriptions[4] = "The Wounded Victory - The beast retreated, bleeding essence. The village sleeps uneasy but alive.";
         
         possibleEndings[5] = PRACTICAL_BARGAIN_WIN;
-        endingDescriptions[5] = "The Legal Compact - A ledger binds the town. You bargained with law instead of blood.";
+        endingDescriptions[5] = "The Legal Compact - A binding contract constrains the creature. Justice through law, not blood.";
 
         // Survival Endings (Tier 3)
         possibleEndings[6] = PARTIAL_BINDING_SURVIVE;
-        endingDescriptions[6] = "We Bought Time - The mist thins, then settles in a new place. You have time, guilt, and watch to keep.";
+        endingDescriptions[6] = "We Bought Time - The mist thins but doesn't fade. You have time, guilt, and eternal watch.";
         
         possibleEndings[7] = WOUNDED_CREATURE_SURVIVE;
-        endingDescriptions[7] = "Flee & Heal - Creature wounded and retreating. New responsibilities await.";
+        endingDescriptions[7] = "Flee & Heal - Creature wounded and retreating. New responsibilities and dangers await.";
         
         possibleEndings[8] = MEMORY_SCAR_SURVIVE;
-        endingDescriptions[8] = "The Ally's Sacrifice - An ally wakes without the face of a memory. The town sleeps; you cannot unsee what you traded.";
+        endingDescriptions[8] = "The Ally's Sacrifice - Someone else paid the price. The victory feels hollow and stained.";
 
         // Loss Endings (Tier 4)
         possibleEndings[9] = LOSS_CONSUMED;
-        endingDescriptions[9] = "The Devourer's Victory - You are a name someone once whispered and could no longer recall.";
+        endingDescriptions[9] = "The Devourer's Victory - You are a name someone whispered and could no longer recall.";
         
         possibleEndings[10] = LOSS_POLITICAL_RUIN;
-        endingDescriptions[10] = "The Cover-Up - You sleep in a high bed that smells of cedar and burned paper. You lost your face in the crowd.";
+        endingDescriptions[10] = "The Cover-Up - You sleep in comfort bought with silence. Your soul was the price of peace.";
         
         possibleEndings[11] = LOSS_MORAL_DEBT;
-        endingDescriptions[11] = "The Bell Tolls - At night a bell rings. Parents count fingers when their children are named.";
+        endingDescriptions[11] = "The Bell Tolls - At night it rings thirteen times. Parents count fingers when children are named.";
         
         possibleEndings[12] = LOSS_FALSE_BIND;
-        endingDescriptions[12] = "The Rebound - The ritual cracked and fed the dark. A name hunts the town at night.";
+        endingDescriptions[12] = "The Rebound - Your ritual fed the darkness. A hungrier shadow haunts the town.";
         
         possibleEndings[13] = LOSS_MEMORY_EROSION;
-        endingDescriptions[13] = "The Forgetting - Books grow blank, and children forget their grandmothers' names.";
+        endingDescriptions[13] = "The Forgetting - Books grow blank, and children forget their own names come morning.";
 
         // Special Character Endings
         possibleEndings[14] = SPECIAL_HUNTER_PREDATOR_VICTORY;
-        endingDescriptions[14] = "The Predator's Hunt - Your tracking led to the creature's ultimate weakness.";
+        endingDescriptions[14] = "The Apex Predator - Your patience revealed the creature's weakness. The hunt ends perfectly.";
         
         possibleEndings[15] = SPECIAL_MAGE_ARCANE_MASTERY;
-        endingDescriptions[15] = "The Mystic's Transcendence - Your Thread of Knowing transformed the threat into wisdom.";
+        endingDescriptions[15] = "The Mystic's Transcendence - Your Thread of Knowing transformed threat into wisdom.";
         
         endingCount = 16;
     }
@@ -107,7 +107,7 @@ public class ClimaxManager
         BaseCharacter character = gameState.getCurrentCharacter();
         String characterType = character.getCharacterType();
         
-        // Calculate ritual fragments, evidence, and special items
+        // Calculate key evidence and achievements
         int ritualFragments = calculateRitualFragments();
         boolean hasAnchorToken = gameState.getFlag(22); // FLAG_ANCHOR_TOKEN_FOUND
         boolean hasTruthEvidence = gameState.getFlag(4) || gameState.getFlag(16); // diary or ledger
@@ -116,12 +116,13 @@ public class ClimaxManager
         boolean trueName = gameState.getFlag(23); // FLAG_TRUE_NAME_KNOWN
         boolean hornObtained = gameState.getFlag(13); // FLAG_HORN_OBTAINED
         boolean chiefInformed = gameState.getFlag(15); // FLAG_CHIEF_INFORMED
-        boolean mayorConfessPublic = gameState.getFlag(17); // FLAG_MAYOR_ALERTED
+        boolean ritualFragmentsGathered = gameState.getFlag(21); // FLAG_RITUAL_FRAGMENTS_OBTAINED
 
+        // Determine outcome based on choice
         if (climaxChoice.equalsIgnoreCase("RESTORE")) 
         {
             return determineRitualEnding(totalKnowledge, characterType, ritualFragments, 
-                                       hasAnchorToken, hasTruthEvidence);
+                                       hasAnchorToken, hasTruthEvidence, ritualFragmentsGathered);
         }
         else if (climaxChoice.equalsIgnoreCase("DESTROY")) 
         {
@@ -131,82 +132,30 @@ public class ClimaxManager
         else if (climaxChoice.equalsIgnoreCase("BARGAIN")) 
         {
             return determineBargainEnding(totalKnowledge, characterType, hasLedger, 
-                                        chiefInformed, mayorConfessPublic);
+                                        chiefInformed, hasTruthEvidence);
         }
         
-        return LOSS_CONSUMED; // Default for invalid choice
+        return generateDetailedEnding(LOSS_CONSUMED, characterType, totalKnowledge);
     }
 
     private String determineRitualEnding(int totalKnowledge, String characterType, 
                                        int ritualFragments, boolean hasAnchorToken, 
-                                       boolean hasTruthEvidence) 
+                                       boolean hasTruthEvidence, boolean ritualFragmentsGathered) 
     {
-        // Check requirements: ritual_fragments >= 2, anchor_token, truth evidence
-        boolean hasRequiredEvidence = (ritualFragments >= 2) && hasAnchorToken && hasTruthEvidence;
+        // Calculate ritual success probability
+        int ritualScore = 0;
+        if (ritualFragments >= 2) ritualScore += 3;
+        if (hasAnchorToken) ritualScore += 3;
+        if (hasTruthEvidence) ritualScore += 2;
+        if (ritualFragmentsGathered) ritualScore += 2;
+        if (characterType.equals("Mage")) ritualScore += 2;
         
-        if (!hasRequiredEvidence) 
+        // Stellar Win conditions (high knowledge + perfect preparation)
+        if (totalKnowledge >= 12 && ritualScore >= 8) 
         {
-            if (ritualFragments >= 1 && hasAnchorToken) 
-            {
-                return generateDetailedEnding(PARTIAL_BINDING_SURVIVE, characterType, totalKnowledge);
-            }
-            else 
-            {
-                return generateDetailedEnding(LOSS_FALSE_BIND, characterType, totalKnowledge);
-            }
-        }
-
-        // Stellar Win conditions (TK >= 10, ritual_fragments >= 3, perfect execution)
-        if (totalKnowledge >= 10 && ritualFragments >= 3 && ritualFailureMeter == 0) 
-        {
-            if (characterType.equals("Mage") && memoryPaid) 
+            if (characterType.equals("Mage")) 
             {
                 return generateDetailedEnding(STELLAR_RITUAL_APOTHEOSIS, characterType, totalKnowledge);
-            }
-        }
-
-        // Clean Win conditions (TK >= 8, all requirements met)
-        if (totalKnowledge >= 8 && memoryPaid) 
-        {
-            return generateDetailedEnding(CLEAN_RITUAL_WIN, characterType, totalKnowledge);
-        }
-        
-        // Survival with partial success
-        if (totalKnowledge >= 5) 
-        {
-            if (memoryPaid) 
-            {
-                return generateDetailedEnding(PARTIAL_BINDING_SURVIVE, characterType, totalKnowledge);
-            }
-            else 
-            {
-                return generateDetailedEnding(MEMORY_SCAR_SURVIVE, characterType, totalKnowledge);
-            }
-        }
-
-        // Low knowledge ritual failure
-        return generateDetailedEnding(LOSS_FALSE_BIND, characterType, totalKnowledge);
-    }
-
-    private String determineDestructionEnding(int totalKnowledge, String characterType, 
-                                            boolean beastObserved, boolean trueName, 
-                                            boolean hornObtained) 
-    {
-        int combatSuccessScore = 0;
-        
-        // Combat success factors
-        if (characterType.equals("Hunter")) combatSuccessScore += 3;
-        if (hornObtained) combatSuccessScore += 3;
-        if (beastObserved) combatSuccessScore += 2;
-        if (trueName) combatSuccessScore += 4;
-        if (totalKnowledge >= 8) combatSuccessScore += 2;
-
-        // Stellar Combat Win (TK >= 10, true_name_known, multiple advantages)
-        if (totalKnowledge >= 10 && trueName && combatSuccessScore >= 10) 
-        {
-            if (characterType.equals("Hunter")) 
-            {
-                return generateDetailedEnding(STELLAR_COMBAT_TRIUMPH, characterType, totalKnowledge);
             }
             else 
             {
@@ -214,52 +163,98 @@ public class ClimaxManager
             }
         }
 
-        // Tactical Destroy Win
-        if (totalKnowledge >= 8 && combatSuccessScore >= 6) 
+        // Clean Win conditions (good knowledge + solid preparation)
+        if (totalKnowledge >= 8 && ritualScore >= 6) 
+        {
+            return generateDetailedEnding(CLEAN_RITUAL_WIN, characterType, totalKnowledge);
+        }
+        
+        // Survival outcomes (moderate success)
+        if (totalKnowledge >= 5 && ritualScore >= 4) 
+        {
+            return generateDetailedEnding(PARTIAL_BINDING_SURVIVE, characterType, totalKnowledge);
+        }
+        else if (totalKnowledge >= 5)
+        {
+            return generateDetailedEnding(MEMORY_SCAR_SURVIVE, characterType, totalKnowledge);
+        }
+
+        // Ritual failure
+        return generateDetailedEnding(LOSS_FALSE_BIND, characterType, totalKnowledge);
+    }
+
+    private String determineDestructionEnding(int totalKnowledge, String characterType, 
+                                            boolean beastObserved, boolean trueName, 
+                                            boolean hornObtained) 
+    {
+        int combatScore = 0;
+        
+        // Combat success factors
+        if (characterType.equals("Hunter")) combatScore += 4;
+        if (hornObtained) combatScore += 3;
+        if (beastObserved) combatScore += 3;
+        if (trueName) combatScore += 4;
+        if (totalKnowledge >= 8) combatScore += 2;
+
+        // Stellar Combat Win (perfect hunter setup)
+        if (totalKnowledge >= 10 && combatScore >= 12) 
+        {
+            if (characterType.equals("Hunter")) 
+            {
+                return generateDetailedEnding(STELLAR_COMBAT_TRIUMPH, characterType, totalKnowledge);
+            }
+            else 
+            {
+                return generateDetailedEnding(SPECIAL_HUNTER_PREDATOR_VICTORY, characterType, totalKnowledge);
+            }
+        }
+
+        // Tactical Victory (solid preparation)
+        if (totalKnowledge >= 7 && combatScore >= 8) 
         {
             return generateDetailedEnding(TACTICAL_DESTROY_WIN, characterType, totalKnowledge);
         }
 
-        // Wounded Creature Survival
-        if (combatSuccessScore >= 4 || totalKnowledge >= 5) 
+        // Wounded but surviving creature
+        if (combatScore >= 5 || totalKnowledge >= 6) 
         {
             return generateDetailedEnding(WOUNDED_CREATURE_SURVIVE, characterType, totalKnowledge);
         }
 
-        // Combat failure - consumed
+        // Combat failure
         return generateDetailedEnding(LOSS_CONSUMED, characterType, totalKnowledge);
     }
 
     private String determineBargainEnding(int totalKnowledge, String characterType, 
                                         boolean hasLedger, boolean chiefInformed, 
-                                        boolean mayorConfessPublic) 
+                                        boolean hasTruthEvidence) 
     {
-        int bargainSuccessScore = 0;
+        int bargainScore = 0;
         
-        if (hasLedger) bargainSuccessScore += 4;
-        if (chiefInformed) bargainSuccessScore += 2;
-        if (mayorConfessPublic) bargainSuccessScore += 3;
-        if (totalKnowledge >= 6) bargainSuccessScore += 2;
+        if (hasLedger) bargainScore += 4;
+        if (chiefInformed) bargainScore += 3;
+        if (hasTruthEvidence) bargainScore += 3;
+        if (totalKnowledge >= 6) bargainScore += 2;
 
         // Stellar Political Reform
-        if (totalKnowledge >= 10 && hasLedger && chiefInformed && mayorConfessPublic) 
+        if (totalKnowledge >= 10 && bargainScore >= 9) 
         {
             return generateDetailedEnding(STELLAR_POLITICAL_REFORM, characterType, totalKnowledge);
         }
 
         // Practical Bargain Win
-        if (bargainSuccessScore >= 6 && hasLedger) 
+        if (bargainScore >= 6 && hasLedger) 
         {
             return generateDetailedEnding(PRACTICAL_BARGAIN_WIN, characterType, totalKnowledge);
         }
 
-        // Political survival with compromise
-        if (bargainSuccessScore >= 3) 
+        // Partial success
+        if (bargainScore >= 4) 
         {
             return generateDetailedEnding(PARTIAL_BINDING_SURVIVE, characterType, totalKnowledge);
         }
 
-        // Bargain failure
+        // Bargain failures
         if (hasLedger) 
         {
             return generateDetailedEnding(LOSS_POLITICAL_RUIN, characterType, totalKnowledge);
@@ -274,24 +269,21 @@ public class ClimaxManager
     {
         int fragments = 0;
         
-        // Manor library secret room
+        // Check various sources of ritual knowledge
         if (gameState.getFlag(7)) fragments++; // FLAG_LIBRARY_TRIGGERED
+        if (gameState.getFlag(12)) fragments++; // FLAG_CAVE_EXAMINED
+        if (gameState.getFlag(14)) fragments++; // FLAG_STONE_CIRCLE_FOUND
+        if (gameState.getFlag(21)) fragments++; // FLAG_RITUAL_FRAGMENTS_OBTAINED
         
-        // Mage-specific ritual fragments from character
+        // Mage-specific fragments
         BaseCharacter character = gameState.getCurrentCharacter();
         if (character instanceof MageCharacter) 
         {
             MageCharacter mage = (MageCharacter) character;
-            fragments += mage.getRitualFragments().length;
+            fragments += mage.getFragmentCount();
         }
         
-        // Forest cave fragments
-        if (gameState.getFlag(12)) fragments++; // FLAG_CAVE_EXAMINED
-        
-        // Stone circle lore
-        if (gameState.getFlag(14)) fragments++; // FLAG_STONE_CIRCLE_FOUND
-        
-        return fragments;
+        return Math.min(fragments, 5); // Cap at 5 for balance
     }
 
     private String generateDetailedEnding(String endingType, String characterType, int totalKnowledge) 
@@ -303,187 +295,109 @@ public class ClimaxManager
 
         switch (endingType) 
         {
-            case STELLAR_RITUAL_APOTHEOSIS:
+            case STELLAR_RITUAL_APOTHEOSIS -> {
                 ending.append("✨ THE MASTER'S BINDING - STELLAR VICTORY ✨\n\n");
                 ending.append("As a ").append(characterType).append(" with ").append(totalKnowledge)
-                      .append(" knowledge points, you have achieved the impossible.\n\n");
-                ending.append("You taste absence where a warm July afternoon used to sit - the memory of your first ");
-                ending.append("magical awakening dissolves like morning mist. But the sacrifice is perfect, and the weave holds.\n\n");
-                ending.append("The ancient words flow from your lips like liquid starlight, each syllable binding the creature's ");
-                ending.append("essence to the fractured anchor you discovered. Your Thread of Knowing guides the ritual with ");
-                ending.append("flawless precision, weaving together confession fragments, the beast's true name, and the ");
-                ending.append("broken covenant into an unbreakable new compact.\n\n");
-                ending.append("The name-consuming spirit screams as it is drawn back into the binding crystal, its power ");
-                ending.append("transformed from malevolence into protection. The village sleeps peacefully for the first time ");
-                ending.append("in months, and the Night's Breath becomes nothing more than cool evening air.\n\n");
-                ending.append("Kiri plays in the village square again, her laughter echoing off ancient stones. Mara nods ");
-                ending.append("approvingly as she folds her protective amulets away. The village chief presents you with a ");
-                ending.append("ceremonial staff, carved with symbols representing your legendary deed.\n\n");
-                ending.append("Years later, your ritual becomes the foundation for a new understanding between the mortal ");
-                ending.append("and spirit worlds. Other mages seek your wisdom, and the binding technique you perfected ");
-                ending.append("saves dozens of communities from similar threats.\n\n");
-                ending.append("🏆 Achievement Unlocked: 'Master of the Ancient Compact' - Perfect ritual execution\n");
-                break;
-
-            case STELLAR_COMBAT_TRIUMPH:
+                      .append(" total knowledge, you have achieved the impossible.\n\n");
+                ending.append("The ritual unfolds with perfect precision. Ancient words flow from your lips like ");
+                ending.append("liquid starlight, each syllable binding the creature's essence to your will. The ");
+                ending.append("memory you sacrifice - your first glimpse of magic as a child - dissolves like ");
+                ending.append("morning mist, but the trade is fair.\n\n");
+                ending.append("The name-consuming entity screams as it's drawn back into a crystalline prison of ");
+                ending.append("your own making. Its power transforms from malevolence into protection, creating ");
+                ending.append("a ward that will guard this village for generations.\n\n");
+                ending.append("Children play safely in streets where shadows once whispered hunger. Your sacrifice ");
+                ending.append("has bought not just victory, but legendary status. Other mages will study your ");
+                ending.append("technique for centuries to come.\n\n");
+                ending.append("🏆 Achievement: 'Legendary Ritualist' - Perfect magical resolution\n");
+            }
+            
+            case STELLAR_COMBAT_TRIUMPH -> {
                 ending.append("⚔️ THE BEAST SLAYER - STELLAR VICTORY ⚔️\n\n");
-                ending.append("As a legendary ").append(characterType).append(" with ").append(totalKnowledge)
-                      .append(" knowledge points, your hunt reaches its ultimate conclusion.\n\n");
-                ending.append("When the creature fell, the earth itself sighed in relief. Your perfect knowledge of its ");
-                ending.append("true name gave you power over its essence, while the ancient horn's call summoned spectral ");
-                ending.append("guardians to hold it in place for your killing blow.\n\n");
-                ending.append("The beast's death reveals something unprecedented - as its form dissolves, it releases the ");
-                ending.append("names and memories it had consumed over centuries. Children across three kingdoms suddenly ");
-                ending.append("remember grandparents they had forgotten, and villages recall their true histories.\n\n");
-                ending.append("The fractured binding crystal in your hand pulses with contained power - not malevolent now, ");
-                ending.append("but protective. Derren's ghostly form appears one final time, bowing deeply before fading ");
-                ending.append("into peaceful rest. His vigil is ended, his failure redeemed through your success.\n\n");
-                ending.append("Your victory becomes legend. The hunter who knew the ancient ways, who could track not just ");
-                ending.append("footprints but the paths between worlds. Village chiefs seek your aid, and you find yourself ");
-                ending.append("the founder of a new order - guardians trained to recognize and combat supernatural threats.\n\n");
-                ending.append("The shard you bring back to the village hums like a warning bell, but also like a promise. ");
-                ending.append("Hollowfen will never again fall prey to such horrors, and neither will any village under ");
-                ending.append("your protection.\n\n");
-                ending.append("🏆 Achievement Unlocked: 'Legendary Beast Slayer' - Perfect combat resolution\n");
-                break;
-
-            case STELLAR_POLITICAL_REFORM:
+                ending.append("Your hunt reaches its ultimate conclusion. As a ").append(characterType)
+                      .append(" with ").append(totalKnowledge).append(" total knowledge, you are the apex predator.\n\n");
+                ending.append("The ancient horn's call summons spectral allies as you speak the creature's true name. ");
+                ending.append("Bound by its own identity, the entity cannot escape as your weapons find their mark. ");
+                ending.append("When it falls, the earth itself sighs in relief.\n\n");
+                ending.append("The creature's death releases centuries of stolen names. Across the kingdom, people ");
+                ending.append("suddenly remember lost children, forgotten loves, and their own true identities. ");
+                ending.append("You have not just saved this village - you've restored the memories of thousands.\n\n");
+                ending.append("Legends speak of the hunter who tracked the untrackable and slew the immortal. ");
+                ending.append("Village children will grow up hearing your name whispered with awe and gratitude.\n\n");
+                ending.append("🏆 Achievement: 'Legendary Beast Slayer' - Perfect combat resolution\n");
+            }
+            
+            case STELLAR_POLITICAL_REFORM -> {
                 ending.append("⚖️ THE ARCHITECT OF JUSTICE - STELLAR VICTORY ⚖️\n\n");
-                ending.append("As a master negotiator with ").append(totalKnowledge)
-                      .append(" knowledge points, you have achieved the impossible - true justice.\n\n");
-                ending.append("The compact stands in the village square, carved in stone and read by everyone. The ledger ");
-                ending.append("evidence you gathered didn't just expose the Mystery Villager's crimes - it revealed an ");
-                ending.append("entire network of human trafficking that stretched across three kingdoms.\n\n");
-                ending.append("Your political maneuvering turned the mayor's public confession into a catalyst for legal ");
-                ending.append("reform. The chief's support gave you the authority to rewrite the ancient laws, creating ");
-                ending.append("new protections against supernatural exploitation and holding merchants accountable for ");
-                ending.append("their 'exotic' trades.\n\n");
-                ending.append("The creature, bound by legal precedent rather than magical ritual, finds itself constrained ");
-                ending.append("by laws that recognize its nature while protecting human rights. It cannot consume names ");
-                ending.append("without due process, cannot make bargains without witnesses, cannot trade in suffering ");
-                ending.append("without consequence.\n\n");
-                ending.append("You have become both hero and architect of a new order. Other kingdoms adopt your legal ");
-                ending.append("frameworks, and the trade in supernatural services becomes regulated, monitored, and just. ");
-                ending.append("The Mystery Villager, freed from his supernatural bondage, testifies before royal courts ");
-                ending.append("and helps dismantle the networks that once enslaved him.\n\n");
-                ending.append("🏆 Achievement Unlocked: 'Architect of the New Law' - Perfect political resolution\n");
-                break;
-
-            case CLEAN_RITUAL_WIN:
+                ending.append("Your evidence and political maneuvering create something unprecedented: true justice.\n\n");
+                ending.append("The compact you negotiate doesn't just bind the creature - it establishes legal ");
+                ending.append("precedent for supernatural crimes. The Mystery Villager's ledger exposes an ");
+                ending.append("international trafficking network, leading to arrests across three kingdoms.\n\n");
+                ending.append("More importantly, your legal framework creates protections against future ");
+                ending.append("supernatural exploitation. The creature finds itself bound not by mystical chains, ");
+                ending.append("but by laws that recognize its nature while protecting human rights.\n\n");
+                ending.append("Your work becomes the foundation for a new branch of jurisprudence. Universities ");
+                ending.append("teach courses based on your legal innovations, and other kingdoms adopt your reforms.\n\n");
+                ending.append("🏆 Achievement: 'Architect of Justice' - Perfect political resolution\n");
+            }
+            
+            case CLEAN_RITUAL_WIN -> {
                 ending.append("🕯️ MEMORY'S PRICE - CLEAN VICTORY 🕯️\n\n");
-                ending.append("The ritual succeeds, but at the cost you knew it would demand.\n\n");
-                ending.append("Kiri laughs again in the village square, her voice bright with restored innocence. The ");
-                ending.append("Night's Breath no longer carries whispers of stolen names, and parents sleep peacefully ");
-                ending.append("knowing their children are safe.\n\n");
-                ending.append("But you cannot remember the color of your mother's kitchen walls, cannot recall the warmth ");
-                ending.append("of her hand on your forehead when fever took you as a child. That memory - precious and ");
-                ending.append("irreplaceable - was the price the ritual demanded, and you paid it willingly.\n\n");
-                ending.append("The loss lives like a quiet wound, a gap in your history that aches when you're not ");
-                ending.append("careful. But when you see the village children playing safely, when you hear their laughter ");
-                ending.append("unmarred by supernatural dread, you know the trade was fair.\n\n");
-                ending.append("Mara visits you sometimes, bringing tea and understanding silence. She knows the weight ");
-                ending.append("of sacrifice, the burden of protection. Together, you keep watch over the village's borders, ");
-                ending.append("ensuring the binding holds and no similar threats can take root.\n\n");
-                ending.append("🏅 Achievement Unlocked: 'Guardian's Sacrifice' - Successful ritual completion\n");
-                break;
-
-            case LOSS_CONSUMED:
+                ending.append("The binding ritual succeeds, but the cost is deeply personal.\n\n");
+                ending.append("As the final words of power leave your lips, you feel something precious slip away - ");
+                ending.append("the memory of your first pet's name. That small joy, that innocent connection, ");
+                ending.append("becomes the anchor that holds the creature in its mystical prison.\n\n");
+                ending.append("The village awakens to safety. Children laugh without fear, and parents sleep ");
+                ending.append("peacefully knowing their offspring's names are secure. Your sacrifice has purchased ");
+                ending.append("their future, and though the loss aches like a phantom limb, you know the trade was just.\n\n");
+                ending.append("Wise Mara visits you sometimes, bringing tea and understanding. She knows the weight ");
+                ending.append("of such choices, and together you keep vigil against similar threats.\n\n");
+                ending.append("🏅 Achievement: 'Guardian's Sacrifice' - Successful ritual with personal cost\n");
+            }
+            
+            case LOSS_CONSUMED -> {
                 ending.append("💀 THE DEVOURER'S VICTORY - TRAGIC LOSS 💀\n\n");
-                ending.append("Your journey as a ").append(characterType).append(" with only ").append(totalKnowledge)
-                      .append(" knowledge points ends in the creature's triumph.\n\n");
-                ending.append("Without sufficient understanding of the beast's true nature, you fell victim to its most ");
-                ending.append("insidious power - the illusion of victory. As you approached what you believed to be ");
-                ending.append("success, reality warped around you like a malevolent dream.\n\n");
-                ending.append("The creature's hunger consumed not just your life, but your very identity. Your name fades ");
-                ending.append("from memory, your deeds become whispered warnings that grow fainter with each telling. ");
-                ending.append("The village children play as if nothing has happened, unable to recall that someone once ");
-                ending.append("tried to save them.\n\n");
-                ending.append("But even in defeat, your sacrifice plants seeds of future salvation. Mara finds fragments ");
-                ending.append("of your investigation notes, clues that will help the next hero who dares to challenge ");
-                ending.append("the darkness. Your failure becomes the foundation for another's success.\n\n");
-                ending.append("In the end, you are a name someone once whispered and could no longer recall - but ");
-                ending.append("whispers have power, and sometimes that is enough.\n\n");
-                ending.append("💔 The Mystery Continues - Your sacrifice guides future heroes\n");
-                break;
-
-            case LOSS_POLITICAL_RUIN:
-                ending.append("📜 THE COVER-UP - POLITICAL LOSS 📜\n\n");
-                ending.append("You sleep in a high bed that smells of cedar and burned paper.\n\n");
-                ending.append("The ledger evidence that could have saved everyone burns in the mayor's private fireplace. ");
-                ending.append("Your attempts to expose the truth were turned against you, transformed into accusations ");
-                ending.append("of madness and sedition. The political machinery you tried to use consumed you instead.\n\n");
-                ending.append("The creature continues its work, but now with official protection. Missing children become ");
-                ending.append("'runaways,' strange sounds are 'settling foundations,' and the Night's Breath is merely ");
-                ending.append("'unfortunate weather patterns' that the town council doesn't discuss.\n\n");
-                ending.append("You lost your face in the crowd, your identity subsumed into the very corruption you ");
-                ending.append("tried to fight. The mayor's gold feels heavy in your pockets, but not as heavy as the ");
-                ending.append("knowledge of what you've become.\n\n");
-                ending.append("Sometimes, in dreams, you remember who you used to be. But dawn always comes, and with ");
-                ending.append("it the comfortable numbness of complicity.\n\n");
-                ending.append("💰 Achievement Unlocked: 'Part of the Problem' - Consumed by corruption\n");
-                break;
-
-            case LOSS_MORAL_DEBT:
-                ending.append("🔔 THE BELL TOLLS - MORAL DEBT 🔔\n\n");
-                ending.append("The town survives, but at a cost that will echo through generations.\n\n");
-                ending.append("Your bargain with the creature created a legal compact that protects the village - but ");
-                ending.append("the terms were more complex than you understood. The beast can no longer consume names ");
-                ending.append("freely, but it can still collect its due through 'legitimate transactions.'\n\n");
-                ending.append("At night, a bell rings thirteen times. Parents count their children's fingers when they ");
-                ending.append("speak their names aloud, because sometimes - just sometimes - a name goes missing for ");
-                ending.append("a day or two before returning. The children always come back, but they're a little ");
-                ending.append("different, a little quieter.\n\n");
-                ending.append("You saved the village from immediate destruction, but condemned it to slow erosion. ");
-                ending.append("The creature feeds carefully now, sustainably, taking just enough to survive while ");
-                ending.append("keeping its part of the bargain.\n\n");
-                ending.append("The worst part is that everyone knows. They see the contracts you signed, the legal ");
-                ending.append("protections you invoked, and they're grateful. After all, losing a memory occasionally ");
-                ending.append("is better than losing everything at once.\n\n");
-                ending.append("⚖️ Achievement Unlocked: 'Devil's Advocate' - Survival through compromise\n");
-                break;
-
-            default:
-                ending.append("The outcome remains shrouded in mystery...\n");
-                break;
+                ending.append("Your investigation ends in the creature's ultimate triumph.\n\n");
+                ending.append("Despite gathering ").append(totalKnowledge).append(" points of knowledge, you lacked ");
+                ending.append("the crucial understanding needed to face such an entity. The creature's hunger ");
+                ending.append("proved stronger than your preparation.\n\n");
+                ending.append("As your identity dissolves, your name becomes just another whisper in the Night's ");
+                ending.append("Breath. The village children continue to disappear, their families forgetting them ");
+                ending.append("before the tears have time to dry.\n\n");
+                ending.append("Yet even in defeat, hope remains. Mara finds fragments of your investigation, ");
+                ending.append("clues that will help the next brave soul who dares challenge this darkness. ");
+                ending.append("Your sacrifice, though tragic, plants seeds of future victory.\n\n");
+                ending.append("💔 The Mystery Continues - Your efforts guide future heroes\n");
+            }
+            
+            default -> {
+                ending.append("UNKNOWN OUTCOME\n\n");
+                ending.append("The threads of fate weave in unexpected patterns. Your investigation into ");
+                ending.append("Hollowfen's supernatural plague reaches an uncertain conclusion.\n\n");
+                ending.append("With ").append(totalKnowledge).append(" total knowledge gathered, you faced ");
+                ending.append("the unknown with courage. Whatever the outcome, your efforts will be remembered.\n\n");
+            }
         }
 
         ending.append("\n").append("=".repeat(70)).append("\n");
-        ending.append("Final Score: ").append(totalKnowledge).append(" Knowledge Points\n");
-        ending.append("Character: ").append(characterType).append("\n");
+        ending.append("Final Knowledge Score: ").append(totalKnowledge).append("\n");
+        ending.append("Character Type: ").append(characterType).append("\n");
+        ending.append("Investigation Approach: ").append(gameState.getCurrentPath()).append("\n");
         ending.append("=".repeat(70)).append("\n");
 
         return ending.toString();
     }
 
-    // Utility methods for memory sacrifice and ritual failure
-    public void setMemoryPaid(boolean paid) 
-    {
-        this.memoryPaid = paid;
-    }
-
-    public void addRitualFailure(int failurePoints) 
-    {
-        this.ritualFailureMeter += failurePoints;
-    }
-
-    public boolean isMemoryPaid() 
-    {
-        return memoryPaid;
-    }
-
-    public int getRitualFailureMeter() 
-    {
-        return ritualFailureMeter;
-    }
-
-    // Information hiding getters
+    // Utility methods
+    public void setMemoryPaid(boolean paid) { this.memoryPaid = paid; }
+    public void addRitualFailure(int points) { this.ritualFailureMeter += points; }
+    public boolean isMemoryPaid() { return memoryPaid; }
+    public int getRitualFailureMeter() { return ritualFailureMeter; }
+    
     public String[] getAllPossibleEndings() 
     {
         String[] endings = new String[endingCount];
-        for (int i = 0; i < endingCount; i++) 
-        {
-            endings[i] = possibleEndings[i];
-        }
+        System.arraycopy(possibleEndings, 0, endings, 0, endingCount);
         return endings;
     }
 

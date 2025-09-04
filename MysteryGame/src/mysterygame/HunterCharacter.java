@@ -4,8 +4,7 @@
  */
 package mysterygame;
 
-
-// HunterCharacter.java - Specific character implementation
+// HunterCharacter.java - Specific character implementation with enhanced tracking abilities
 public class HunterCharacter extends BaseCharacter 
 {
     private boolean predatorsPatienceActive;
@@ -18,7 +17,7 @@ public class HunterCharacter extends BaseCharacter
         super(characterName, "Hunter");
         this.predatorsPatienceActive = true;
         this.stealthBonus = 1;
-        this.huntingEvidence = new String[10];
+        this.huntingEvidence = new String[15]; // Increased capacity
         this.evidenceCount = 0;
     }
     
@@ -50,16 +49,28 @@ public class HunterCharacter extends BaseCharacter
     {
         if (action.equals("PREDATOR_PATIENCE")) 
         {
-            return "Your predator's patience grants you enhanced tracking abilities. You spot physical tokens at half visibility threshold.";
+            return "Your predator's patience grants you enhanced tracking abilities. You can remain motionless for hours, " +
+                   "observing your target's patterns and waiting for the perfect moment to strike. Physical evidence and " +
+                   "creature tracks are more easily discovered.";
         }
-        return "Unknown hunter action.";
+        else if (action.equals("SET_TRAP"))
+        {
+            return "Using your trap kit, you set a carefully concealed snare designed to capture supernatural entities. " +
+                   "The trap is baited with items that draw creatures seeking to feed on human essence.";
+        }
+        else if (action.equals("TRACK_CREATURE"))
+        {
+            return "Your tracking expertise allows you to follow even supernatural trails. You can read the signs of " +
+                   "otherworldly passage and predict where the creature will appear next.";
+        }
+        return "Unknown hunter action: " + action;
     }
     
     @Override
     public boolean canAccessLocation(String location) 
     {
-        // Hunters favor direct approaches and physical locations
-        String[] favoredLocations = {"Forest", "Cave", "Hut", "Stone Circle"};
+        // Hunters excel at outdoor and dangerous locations
+        String[] favoredLocations = {"Forest", "Cave", "Hut", "Stone Circle", "Abandoned", "Wild"};
         for (String favoredLocation : favoredLocations) 
         {
             if (location.contains(favoredLocation)) 
@@ -67,7 +78,8 @@ public class HunterCharacter extends BaseCharacter
                 return true;
             }
         }
-        return true; // Hunters can access most locations through force/stealth
+        // Hunters can access most locations through stealth and force
+        return true; 
     }
     
     public void addHuntingEvidence(String evidence) 
@@ -88,5 +100,45 @@ public class HunterCharacter extends BaseCharacter
             actualEvidence[i] = huntingEvidence[i];
         }
         return actualEvidence;
+    }
+    
+    public int getEvidenceCount() 
+    {
+        return evidenceCount;
+    }
+    
+    public boolean hasPredatorsPatience() 
+    {
+        return predatorsPatienceActive;
+    }
+    
+    public int getStealthBonus() 
+    {
+        return stealthBonus;
+    }
+    
+    // Enhanced investigation methods for hunters
+    public String investigatePhysicalEvidence(String location) 
+    {
+        StringBuilder result = new StringBuilder();
+        result.append("Using your tracker's instincts, you examine ").append(location).append(" for physical signs.\n");
+        
+        if (predatorsPatienceActive) 
+        {
+            result.append("Your predator's patience reveals subtle details others would miss:\n");
+            result.append("• Faint impressions in the earth\n");
+            result.append("• Disturbed vegetation patterns\n");
+            result.append("• Scent traces of supernatural activity\n");
+            addKnowledgePoints(1);
+        }
+        
+        return result.toString();
+    }
+    
+    @Override
+    public String toString() 
+    {
+        return String.format("Hunter %s - Knowledge: %d, Evidence Collected: %d, Skills: Tracking/Combat", 
+                           getCharacterName(), getKnowledgePoints(), evidenceCount);
     }
 }
